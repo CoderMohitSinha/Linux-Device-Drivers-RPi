@@ -1,18 +1,21 @@
-#include <linux/init.h>
-#include <linux/module.h>
+#include <linux/module.h>    // included for all kernel modules
+#include <linux/kernel.h>    // included for KERN_INFO
+#include <linux/init.h>      // included for __init and __exit macros
 
-MODULE_LICENSE("Dual BSD/GPL"); //free license else kernal will complain when the module is loaded
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Mohit Sinha");
+MODULE_DESCRIPTION("A Simple Hello World module");
 
-static int hello_init(void){
-    printk(KERN_ALERT "Hello, world\n");
-    return 0;
+static int __init hello_init(void)
+{
+    printk(KERN_INFO "Hello world!\n");
+    return 0;    // Non-zero return means that the module couldn't be loaded.
 }
 
-static void hello_exit(void){
-    printk(KERN_ALERT "Goodbye, cruel world\n");
+static void __exit hello_cleanup(void)
+{
+    printk(KERN_INFO "Cleaning up module.\n");
 }
-
 
 module_init(hello_init);
-module_exit(hello_exit);
-
+module_exit(hello_cleanup);
