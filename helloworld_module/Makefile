@@ -5,10 +5,10 @@ clean: RPI_clean
 
 
 RPI_build: helloworld_module.c
-	sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -C $(PWD)/../linux M=$(PWD) modules
+	sudo make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd) modules
 
 RPI_clean:
-	sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -C $(PWD)/../linux M=$(PWD) clean
+	sudo make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd) clean
 
 
 PHONY: all clean RPI_build RPI_clean
